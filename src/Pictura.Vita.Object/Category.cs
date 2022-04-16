@@ -9,4 +9,6 @@ public record Category
     public string? Subtitle { get; set; }
 
     public Privacy Privacy { get; set; }
+
+    public IList<Guid>? EpisodeIds { get; set; }
 }

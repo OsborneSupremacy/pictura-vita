@@ -18,6 +18,8 @@ public record Episode
 
     public bool ObfuscateDates { get; set; }
 
+    public EpisodeType EpisodeType { get; set; }
+
     public DateOnly Start { get; set; }
 
     public DateOnly? End { get; set; }
