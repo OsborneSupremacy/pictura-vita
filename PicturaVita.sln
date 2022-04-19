@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictura.Vita.Utility.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictura.Vita.Object.Validator", "src\Pictura.Vita.Object.Validator\Pictura.Vita.Object.Validator.csproj", "{555D7A53-E567-4442-877D-95C120D58329}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictura.Vita.Object.Validator.Tests", "src\Pictura.Vita.Object.Validator.Tests\Pictura.Vita.Object.Validator.Tests.csproj", "{0C3F71B8-F79F-4067-B7A1-26B3B62D2F46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictura.Vita.Object.Validator.Tests", "src\Pictura.Vita.Object.Validator.Tests\Pictura.Vita.Object.Validator.Tests.csproj", "{0C3F71B8-F79F-4067-B7A1-26B3B62D2F46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

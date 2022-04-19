@@ -23,6 +23,4 @@ public record Episode
     public DateOnly Start { get; set; }
 
     public DateOnly? End { get; set; }
-
-    public byte[]? Image { get; set; }
 }
