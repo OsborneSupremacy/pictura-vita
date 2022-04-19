@@ -114,4 +114,30 @@ public class EpisodeValidatorTests
             .Should()
             .Contain(nameof(Episode.End));
     }
+
+    [Theory]
+    [InlineData("2000-01-01")]
+    [InlineData("2000-01-02")]
+    [InlineData("2000-01-10")]
+    public async void Valid(string endDate)
+    { 
+        // arrange
+        var episode = new Episode
+        {
+            EpisodeId = Guid.NewGuid(),
+            Title = "Title",
+            Privacy = Privacy.Inherit,
+            Url = "http://www.google.com",
+            Start = new DateOnly(2000, 1, 1),
+            End = DateOnly.Parse(endDate)
+        };
+
+        var sut = new EpisodeValidator();
+
+        // act
+        var result = await sut.ValidateAsync(episode);
+
+        // assert
+        result.IsValid.Should().BeTrue();
+    }
 }
