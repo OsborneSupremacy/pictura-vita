@@ -2,7 +2,6 @@
 using FluentAssertions;
 using System.Linq;
 using System;
-using System.Collections.Generic;
 
 namespace Pictura.Vita.Object.Validator.Tests;
 
