@@ -2,6 +2,7 @@
 using FluentAssertions;
 using System.Linq;
 using System;
+using Pictura.Vita.Utility;
 
 namespace Pictura.Vita.Object.Validator.Tests;
 
@@ -11,7 +12,7 @@ public class EpisodeValidatorTests
     public async void Invalid_When_EpisodeId_Default()
     {
         // arrange
-        var category = new Episode
+        Episode episode = new()
         {
             EpisodeId = new Guid(),
             Privacy = Privacy.Inherit,
@@ -19,10 +20,10 @@ public class EpisodeValidatorTests
             Start = new DateOnly(2000, 1, 1)
         };
 
-        var sut = new EpisodeValidator();
+        EpisodeValidator sut = new();
 
         // act
-        var result = await sut.ValidateAsync(category);
+        var result = await sut.ValidateAsync(episode);
 
         // assert
         result.IsValid.Should().BeFalse();
@@ -37,15 +38,15 @@ public class EpisodeValidatorTests
     public async void Invalid_When_Title_Exceeds_Max()
     {
         // arrange
-        var episode = new Episode
+        Episode episode = new()
         {
             EpisodeId = Guid.NewGuid(),
-            Title = new string('?', 256),
+            Title = '?'.Repeat(256),
             Privacy = Privacy.Inherit,
             Start = new DateOnly(2000, 1, 1)
         };
 
-        var sut = new EpisodeValidator();
+        EpisodeValidator sut = new();
 
         // act
         var result = await sut.ValidateAsync(episode);
@@ -63,7 +64,7 @@ public class EpisodeValidatorTests
     public async void Invalid_When_Url_Invalid()
     {
         // arrange
-        var episode = new Episode
+        Episode episode = new()
         {
             EpisodeId = Guid.NewGuid(),
             Title = "Title",
@@ -72,7 +73,7 @@ public class EpisodeValidatorTests
             Start = new DateOnly(2000, 1, 1)
         };
 
-        var sut = new EpisodeValidator();
+        EpisodeValidator sut = new();
 
         // act
         var result = await sut.ValidateAsync(episode);
@@ -90,7 +91,7 @@ public class EpisodeValidatorTests
     public async void Invalid_When_EndDate_LessThan_StartDate()
     {
         // arrange
-        var episode = new Episode
+        Episode episode = new()
         {
             EpisodeId = Guid.NewGuid(),
             Title = "Title",
@@ -100,7 +101,7 @@ public class EpisodeValidatorTests
             End = new DateOnly(1999, 12, 31)
         };
 
-        var sut = new EpisodeValidator();
+        EpisodeValidator sut = new();
 
         // act
         var result = await sut.ValidateAsync(episode);
@@ -119,19 +120,19 @@ public class EpisodeValidatorTests
     [InlineData("2000-01-02")]
     [InlineData("2000-01-10")]
     public async void Valid(string endDate)
-    { 
+    {
         // arrange
-        var episode = new Episode
+        Episode episode = new()
         {
             EpisodeId = Guid.NewGuid(),
             Title = "Title",
             Privacy = Privacy.Inherit,
             Url = "http://www.google.com",
             Start = new DateOnly(2000, 1, 1),
-            End = DateOnly.Parse(endDate)
+            End = endDate.ToDateOnly()
         };
 
-        var sut = new EpisodeValidator();
+        EpisodeValidator sut = new();
 
         // act
         var result = await sut.ValidateAsync(episode);

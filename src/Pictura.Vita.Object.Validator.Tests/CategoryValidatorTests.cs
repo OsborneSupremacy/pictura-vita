@@ -3,6 +3,7 @@ using FluentAssertions;
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using Pictura.Vita.Utility;
 
 namespace Pictura.Vita.Object.Validator.Tests;
 
@@ -41,7 +42,7 @@ public class CategoryValidatorTests
         var category = new Category
         {
             CategoryId = Guid.NewGuid(),
-            Title = new string('?', 256),
+            Title = "?".Repeat(256),
             Privacy = Privacy.VisibleByDefault,
             EpisodeIds = Enumerable.Empty<Guid>().ToList()
         };
@@ -95,7 +96,7 @@ public class CategoryValidatorTests
     public async void Invalid_When_Episodes_Is_Null()
     {
         // arrange
-        var category = new Category
+        Category category = new()
         {
             CategoryId = Guid.NewGuid(),
             Title = "Title",
@@ -103,7 +104,7 @@ public class CategoryValidatorTests
             EpisodeIds = null
         };
 
-        var sut = new CategoryValidator();
+        CategoryValidator sut = new();
 
         // act
         var result = await sut.ValidateAsync(category);
@@ -121,7 +122,7 @@ public class CategoryValidatorTests
     public async void Invalid_When_EpisodeId_Bad()
     {
         // arrange
-        var category = new Category
+        Category category = new()
         {
             CategoryId = Guid.NewGuid(),
             Title = "Title",
@@ -129,7 +130,7 @@ public class CategoryValidatorTests
             EpisodeIds = new List<Guid> { new Guid() }
         };
 
-        var sut = new CategoryValidator();
+        CategoryValidator sut = new();
 
         // act
         var result = await sut.ValidateAsync(category);
@@ -147,7 +148,7 @@ public class CategoryValidatorTests
     public async void Valid()
     {
         // arrange
-        var category = new Category
+        Category category = new()
         {
             CategoryId = Guid.NewGuid(),
             Title = "Title",
@@ -156,7 +157,7 @@ public class CategoryValidatorTests
             EpisodeIds = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() }
         };
 
-        var sut = new CategoryValidator();
+        CategoryValidator sut = new();
 
         // act
         var result = await sut.ValidateAsync(category);

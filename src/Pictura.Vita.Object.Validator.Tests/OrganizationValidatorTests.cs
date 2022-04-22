@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using FluentAssertions;
 using System.Linq;
-using System;
+using Pictura.Vita.Utility;
 
 namespace Pictura.Vita.Object.Validator.Tests
 {
@@ -11,12 +11,12 @@ namespace Pictura.Vita.Object.Validator.Tests
         public async void Invalid_When_Name_Exceeds_Max()
         {
             // arrange
-            var organization = new Organization
+            Organization organization = new()
             {
-                Name = new string('?', 256),
+                Name = '?'.Repeat(256)
             };
 
-            var sut = new OrganizationValidator();
+            OrganizationValidator sut = new();
 
             // act
             var result = await sut.ValidateAsync(organization);
@@ -35,14 +35,14 @@ namespace Pictura.Vita.Object.Validator.Tests
         public async void Invalid_Dates_Invalid(string start, string end)
         {
             // arrange
-            var organization = new Organization
+            Organization organization = new()
             {
-                Name = new string('?', 255),
-                Start = DateOnly.Parse(start),
-                End = DateOnly.Parse(end)
+                Name = '?'.Repeat(255),
+                Start = start.ToDateOnly(),
+                End = end.ToDateOnly()
             };
 
-            var sut = new OrganizationValidator();
+            OrganizationValidator sut = new();
 
             // act
             var result = await sut.ValidateAsync(organization);
@@ -64,14 +64,14 @@ namespace Pictura.Vita.Object.Validator.Tests
         public async void Valid(string start, string end)
         {
             // arrange
-            var organization = new Organization
+            Organization organization = new()
             {
-                Name = new string('?', 255),
-                Start = DateOnly.TryParse(start, out var startDate) ? startDate : null,
-                End = DateOnly.TryParse(end, out var endDate) ? endDate : null
+                Name = '?'.Repeat(255),
+                Start = start.ToDateOnlyOrDefault(),
+                End = end.ToDateOnlyOrDefault()
             };
 
-            var sut = new OrganizationValidator();
+            OrganizationValidator sut = new();
 
             // act
             var result = await sut.ValidateAsync(organization);

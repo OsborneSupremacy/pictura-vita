@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pictura.Vita.Object.Validator\Pictura.Vita.Object.Validator.csproj" />
+    <ProjectReference Include="..\Pictura.Vita.Utility\Pictura.Vita.Utility.csproj" />
   </ItemGroup>
 
 </Project>
