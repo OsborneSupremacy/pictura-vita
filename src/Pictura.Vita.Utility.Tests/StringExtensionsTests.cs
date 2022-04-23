@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
-using Pictura.Vita.Utility;
 using Xunit;
+
+namespace Pictura.Vita.Utility.Tests;
 
 public class StringExtensionsTests
 {
