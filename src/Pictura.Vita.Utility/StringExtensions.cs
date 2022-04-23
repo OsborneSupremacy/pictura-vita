@@ -14,5 +14,5 @@ public static class StringExtensions
         DateOnly.Parse(input);
 
     public static string Repeat(this string input, int count) =>
-        new StringBuilder(input.Length * count).Insert(0, input, count).ToString();
+        new StringBuilder(input?.Length ?? 0 * count).Insert(0, input, count).ToString();
 }
