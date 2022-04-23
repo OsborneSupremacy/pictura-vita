@@ -14,7 +14,7 @@ public class EpisodeValidator : AbstractValidator<Episode>
         RuleFor(x => x.Url).Length(0, 2048);
         RuleFor(x => x.Url).Url();
         RuleFor(x => x.UrlDescription).Length(0, 255);
-        RuleFor(x => x.Start).NotNull();
+        RuleFor(x => x.Start).NotEmpty();
         RuleFor(x => x.End)
             .GreaterThanOrEqualTo(x => x.Start)
             .WithMessage($"{nameof(Episode.End)} cannot be earlier than {nameof(Episode.Start)}");
