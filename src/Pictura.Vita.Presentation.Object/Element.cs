@@ -13,10 +13,6 @@
 
         public IList<Element> Children { get; }
 
-        public int MaxChildOrder { get; private set; }
-
-        public int Order { get; init; }
-
         public abstract string RenderOpen();
 
         public abstract string RenderClose();
@@ -24,7 +20,6 @@
         public void AddChild(Element child)
         {
             Children.Add(child);
-            MaxChildOrder = child.Order;
         }
     }
 }
