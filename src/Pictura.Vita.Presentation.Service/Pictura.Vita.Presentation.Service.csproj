@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pictura.Vita.Object\Pictura.Vita.Object.csproj" />
+    <ProjectReference Include="..\Pictura.Vita.Presentation.Object\Pictura.Vita.Presentation.Object.csproj" />
+  </ItemGroup>
+
+</Project>

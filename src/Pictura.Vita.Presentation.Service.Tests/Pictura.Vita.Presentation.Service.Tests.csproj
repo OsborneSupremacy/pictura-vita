@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pictura.Vita.Object.Validator\Pictura.Vita.Object.Validator.csproj" />
+    <ProjectReference Include="..\Pictura.Vita.Presentation.Object\Pictura.Vita.Presentation.Object.csproj" />
+    <ProjectReference Include="..\Pictura.Vita.Presentation.Service\Pictura.Vita.Presentation.Service.csproj" />
     <ProjectReference Include="..\Pictura.Vita.Utility\Pictura.Vita.Utility.csproj" />
   </ItemGroup>
 
