@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictura.Vita.Object.Validat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictura.Vita.Object.Validator.Tests", "src\Pictura.Vita.Object.Validator.Tests\Pictura.Vita.Object.Validator.Tests.csproj", "{0C3F71B8-F79F-4067-B7A1-26B3B62D2F46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictura.Vita.Presentation.Object", "src\Pictura.Vita.Presentation.Object\Pictura.Vita.Presentation.Object.csproj", "{5C4AB752-3B24-44A9-BD0A-22468CFADF9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{0C3F71B8-F79F-4067-B7A1-26B3B62D2F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C3F71B8-F79F-4067-B7A1-26B3B62D2F46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C3F71B8-F79F-4067-B7A1-26B3B62D2F46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C4AB752-3B24-44A9-BD0A-22468CFADF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C4AB752-3B24-44A9-BD0A-22468CFADF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C4AB752-3B24-44A9-BD0A-22468CFADF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C4AB752-3B24-44A9-BD0A-22468CFADF9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
