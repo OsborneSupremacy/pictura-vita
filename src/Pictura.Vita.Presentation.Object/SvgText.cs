@@ -14,20 +14,21 @@ namespace Pictura.Vita.Presentation.Object
             // using a textPath is necessary to center/middle-align text with rectangle
             var pathId = Guid.NewGuid().ToString();
 
-            var path = new SelfClosedRenderTag("path")
-                .Add("id", pathId)
-                .Add("d", $"M {X} {YCenter} L {X + Width} {YCenter}")
-                .Add("stroke", "transparent");
+            var path = new TagBuilder("path")
+                .AddAttribute("id", pathId)
+                .AddAttribute("d", $"M {X} {YCenter} L {X + Width} {YCenter}")
+                .AddAttribute("stroke", "transparent")
+                .MakeSelfClosed();
 
-            var text = new SeparateClosedRenderable("text");
+            var text = new TagBuilder("text");
 
-            var textPath = new SeparateClosedRenderable("textPath")
-                .Add("href", "#" + pathId)
-                .Add("startoffset", X + Width / 2 - X)
-                .Add("text-anchor", "middle")
-                .Add("dominant-baseline", "middle")
-                .Add("fill", "green")
-                .Add("font-size", 100);
+            var textPath = new TagBuilder("textPath")
+                .AddAttribute("href", "#" + pathId)
+                .AddAttribute("startoffset", X + Width / 2 - X)
+                .AddAttribute("text-anchor", "middle")
+                .AddAttribute("dominant-baseline", "middle")
+                .AddAttribute("fill", "green")
+                .AddAttribute("font-size", 100);
 
             s.Append(path.RenderOpen());
             s.Append(text.RenderOpen());
