@@ -10,14 +10,16 @@ namespace Pictura.Vita.Presentation.Object
                 .AddAttribute("width", Width)
                 .AddAttribute("height", Height)
                 .AddAttribute(
-                    new AttributeBuilder("style")
-                        .AddValue("fill:rgb(0,0,255)")
-                        .AddValue("stroke-width:3")
-                        .AddValue("stroke:rgb(0,0,0)")
+                    new AttributeBuilder("style", 
+                        new ValueBuilder()
+                            .AddValuePart("fill", "rgb(0, 0, 255)")
+                            .AddValuePart("stroke-width", "3")
+                            .AddValuePart("stroke", "rgb(0,0,0)")
+                        )
                 )
                 .MakeSelfClosed()
                 .RenderOpen();
 
-        public override string RenderClose() => String.Empty;
+        public override string RenderClose() => string.Empty;
     }
 }

@@ -5,14 +5,12 @@ namespace Pictura.Vita.Presentation.Object
     {
         public static AttributeBuilder AddValue(this AttributeBuilder input, string value)
         {
-            input.Values.Add(value);
+            input.ValueBuilder.AddValuePart(value);
             return input;
         }
-        public static AttributeBuilder AddValue(this AttributeBuilder input, int value)
-        {
-            input.Values.Add(value.ToString());
-            return input;
-        }
+
+        public static AttributeBuilder AddValue(this AttributeBuilder input, int value) =>
+            AddValue(input, value.ToString());
     }
 
     public class AttributeBuilder
@@ -20,14 +18,20 @@ namespace Pictura.Vita.Presentation.Object
         public AttributeBuilder(string key)
         {
             Key = key ?? throw new ArgumentNullException(nameof(key));
-            Values = new List<string>();
+            ValueBuilder = new ValueBuilder();
+        }
+
+        public AttributeBuilder(string key, ValueBuilder valueBuilder)
+        {
+            Key = key ?? throw new ArgumentNullException(nameof(key));
+            ValueBuilder = valueBuilder;
         }
 
         public string Key { get; init; }
 
-        public List<string> Values { get; }
+        public ValueBuilder ValueBuilder { get; set; }
 
         public string Render() =>
-            $@"{Key}=""{string.Join(';', Values)}""";
+            $@"{Key}=""{ValueBuilder.Render()}""";
     }
 }

@@ -10,21 +10,15 @@ namespace Pictura.Vita.Presentation.Object
             return input;
         }
 
-        public static TagBuilder AddAttribute(this TagBuilder input, string id, string value)
-        {
-            input.Attributes.Add(new AttributeBuilder(id).AddValue(value));
-            return input;
-        }
+        public static TagBuilder AddAttribute(this TagBuilder input, string id, string value) =>
+            AddAttribute(input, new AttributeBuilder(id).AddValue(value));
 
-        public static TagBuilder AddAttribute(this TagBuilder input, string id, int value)
+        public static TagBuilder AddAttribute(this TagBuilder input, string id, int value) =>
+            AddAttribute(input, id, value.ToString());
+      
+        public static TagBuilder AddAttribute(this TagBuilder input, AttributeBuilder attributeBuilder)
         {
-            input.Attributes.Add(new AttributeBuilder(id).AddValue(value));
-            return input;
-        }
-
-        public static TagBuilder AddAttribute(this TagBuilder input, AttributeBuilder attribute)
-        {
-            input.Attributes.Add(attribute);
+            input.Attributes.Add(attributeBuilder);
             return input;
         }
     }
