@@ -11,9 +11,9 @@ namespace Pictura.Vita.Presentation.Object
                 .AddAttribute("height", Height)
                 .AddAttribute(
                     new AttributeBuilder("style")
-                    .AddValue("fill:rgb(0,0,255)")
-                    .AddValue("stroke-width:3")
-                    .AddValue("stroke:rgb(0,0,0)")
+                        .AddValue("fill:rgb(0,0,255)")
+                        .AddValue("stroke-width:3")
+                        .AddValue("stroke:rgb(0,0,0)")
                 )
                 .MakeSelfClosed()
                 .RenderOpen();
