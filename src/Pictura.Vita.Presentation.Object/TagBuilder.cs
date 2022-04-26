@@ -15,9 +15,16 @@ namespace Pictura.Vita.Presentation.Object
             input.Attributes.Add(new AttributeBuilder(id).AddValue(value));
             return input;
         }
+
         public static TagBuilder AddAttribute(this TagBuilder input, string id, int value)
         {
             input.Attributes.Add(new AttributeBuilder(id).AddValue(value));
+            return input;
+        }
+
+        public static TagBuilder AddAttribute(this TagBuilder input, AttributeBuilder attribute)
+        {
+            input.Attributes.Add(attribute);
             return input;
         }
     }

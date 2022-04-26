@@ -1,6 +1,4 @@
 ﻿
-using System.Text;
-
 namespace Pictura.Vita.Presentation.Object
 {
     public record SvgRect : StructuralElement
@@ -11,7 +9,12 @@ namespace Pictura.Vita.Presentation.Object
                 .AddAttribute("y", Y)
                 .AddAttribute("width", Width)
                 .AddAttribute("height", Height)
-                .AddAttribute("style", "fill:rgb(0,0,255); stroke-width:3; stroke:rgb(0,0,0)")
+                .AddAttribute(
+                    new AttributeBuilder("style")
+                    .AddValue("fill:rgb(0,0,255)")
+                    .AddValue("stroke-width:3")
+                    .AddValue("stroke:rgb(0,0,0)")
+                )
                 .MakeSelfClosed()
                 .RenderOpen();
 
