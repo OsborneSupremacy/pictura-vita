@@ -12,12 +12,12 @@ namespace Pictura.Vita.Presentation.Object
 
         public static TagBuilder AddAttribute(this TagBuilder input, string id, string value)
         {
-            input.Attributes.Add(id, value);
+            input.Attributes.Add(new AttributeBuilder(id).AddValue(value));
             return input;
         }
         public static TagBuilder AddAttribute(this TagBuilder input, string id, int value)
         {
-            input.AddAttribute(id, value.ToString());
+            input.Attributes.Add(new AttributeBuilder(id).AddValue(value));
             return input;
         }
     }
@@ -27,27 +27,24 @@ namespace Pictura.Vita.Presentation.Object
         public TagBuilder(string tag)
         {
             Tag = tag ?? throw new ArgumentNullException(nameof(tag));
-            Attributes = new Dictionary<string, string>();
+            Attributes = new List<AttributeBuilder>();
         }
 
         public string Tag { get; init; }
 
         public bool IsSelfClosed { get; set; }
 
-        public Dictionary<string, string> Attributes { get; }
+        public List<AttributeBuilder> Attributes { get; }
 
         public string RenderOpen()
         {
             StringBuilder s = new();
             s.Append($"<{Tag}");
 
-            foreach (var (key, value) in Attributes)
-                s.Append($@" {key}=""{value}""");
+            foreach (var attribute in Attributes)
+                s.Append(" " + attribute.Render());
 
-            if (IsSelfClosed)
-                s.Append(" />");
-            else
-                s.Append('>');
+            s.Append(IsSelfClosed ? " />" : '>');
 
             return s.ToString();
         }
@@ -55,5 +52,4 @@ namespace Pictura.Vita.Presentation.Object
         public string RenderClose() =>
             IsSelfClosed ? string.Empty : $"</{Tag}>";
     }
-
 }
