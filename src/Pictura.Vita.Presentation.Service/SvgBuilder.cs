@@ -25,7 +25,7 @@ namespace Pictura.Vita.Presentation.Service
             {
                 SvgRect rect = new()
                 {
-                    X = 0, // for events, need to calculate based on start. but for categories, fine as is
+                    X = 0,
                     Y = runningY,
                     Width = totalDays,
                     Height = 500
