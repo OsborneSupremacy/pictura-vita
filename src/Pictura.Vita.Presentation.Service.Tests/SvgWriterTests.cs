@@ -51,17 +51,26 @@ namespace Pictura.Vita.Presentation.Service.Tests
                             EpisodeType = EpisodeType.Period,
                             EpisodeId = episodeDict[2]
                         },
+                        new Episode
+                        {
+                            Start = new DateOnly(2011, 1, 1),
+                            End = new DateOnly(2020, 12, 31),
+                            Title = "300 Third Street",
+                            EpisodeType = EpisodeType.Period,
+                            EpisodeId = episodeDict[3]
+                        },
                     },
 
                     Categories = new List<Category>
                     {
                         new Category()
                         { 
-                            Title = "Category 1",
+                            Title = "Residence",
                             EpisodeIds = new List<Guid>
                             {
                                 episodeDict[1],
                                 episodeDict[2],
+                                episodeDict[3],
                             }
                         },
                         new Category { Title = "Category 2" },

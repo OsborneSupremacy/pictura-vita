@@ -15,7 +15,7 @@ namespace Pictura.Vita.Presentation.Service
                 X = 0,
                 Y = 0,
                 IsRoot = true,
-                Height = 1000,
+                Height = 10000,
                 Width = totalDays
             };
 
@@ -28,7 +28,7 @@ namespace Pictura.Vita.Presentation.Service
                     X = 0, // for events, need to calculate based on start. but for categories, fine as is
                     Y = runningY,
                     Width = totalDays,
-                    Height = 100
+                    Height = 500
                 };
 
                 svg.AddChild(rect);
@@ -38,7 +38,7 @@ namespace Pictura.Vita.Presentation.Service
                     X = 0,
                     Y = runningY,
                     Width = totalDays,
-                    Height = 100,
+                    Height = 500,
                     Content = cat.Title
                 };
 
@@ -49,21 +49,21 @@ namespace Pictura.Vita.Presentation.Service
 
                 foreach(var episode in episodes)
                 {
+                    runningY += 500;
+
                     SvgText episodText = new()
                     {
-                        X = 0,
+                        X = episode.Start.DayDiff(view.Start),
                         Y = runningY,
-                        Width = (episode.End?.DayNumber - episode.Start.DayNumber) ?? 1,
-                        Height = 100,
+                        Width = episode.End.DayDiff(episode.Start),
+                        Height = 500,
                         Content = episode.Title
                     };
 
                     svg.AddChild(episodText);
-
-                    runningY += 100;
                 }
 
-                runningY += 100;
+                runningY += 500;
             }
 
             return svg;
