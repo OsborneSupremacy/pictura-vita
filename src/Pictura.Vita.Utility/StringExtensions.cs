@@ -15,4 +15,10 @@ public static class StringExtensions
 
     public static string Repeat(this string input, int count) =>
         new StringBuilder(input?.Length ?? 0 * count).Insert(0, input, count).ToString();
+
+    public static string AppendIfNotWhitespace(this string? input, string? value, string separator)
+    {
+        if(string.IsNullOrWhiteSpace(value)) return input ?? string.Empty;
+        return $"{input}{separator}{value}";
+    }
 }

@@ -43,6 +43,7 @@ namespace Pictura.Vita.Presentation.Service.Tests
                             EpisodeType = EpisodeType.Period,
                             EpisodeId = episodeDict[1]
                         },
+
                         new Episode
                         {
                             Start = new DateOnly(2000, 1, 1),
@@ -51,6 +52,7 @@ namespace Pictura.Vita.Presentation.Service.Tests
                             EpisodeType = EpisodeType.Period,
                             EpisodeId = episodeDict[2]
                         },
+
                         new Episode
                         {
                             Start = new DateOnly(2011, 1, 1),
@@ -59,6 +61,27 @@ namespace Pictura.Vita.Presentation.Service.Tests
                             EpisodeType = EpisodeType.Period,
                             EpisodeId = episodeDict[3]
                         },
+
+                        new Episode
+                        {
+                            Start = new DateOnly(1995, 1, 1),
+                            End = new DateOnly(2015, 12, 31),
+                            Title = "1000 Beach Street",
+                            Subtitle = "Vacation Home",
+                            EpisodeType = EpisodeType.Period,
+                            EpisodeId = episodeDict[4]
+                        },
+
+                        new Episode
+                        {
+                            Start = new DateOnly(1980, 1, 1),
+                            End = new DateOnly(2000, 12, 31),
+                            Title = "Nightmare House",
+                            Subtitle = "Follows Me Wherever I Go",
+                            EpisodeType = EpisodeType.Period,
+                            EpisodeId = episodeDict[5]
+                        }
+
                     },
 
                     Categories = new List<Category>
@@ -71,6 +94,8 @@ namespace Pictura.Vita.Presentation.Service.Tests
                                 episodeDict[1],
                                 episodeDict[2],
                                 episodeDict[3],
+                                episodeDict[4],
+                                episodeDict[5],
                             }
                         },
                         new Category { Title = "Category 2" },

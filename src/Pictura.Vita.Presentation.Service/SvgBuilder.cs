@@ -21,7 +21,7 @@ namespace Pictura.Vita.Presentation.Service
 
             var runningY = 0;
 
-            foreach(var cat in view.Timeline?.Categories ?? new List<Category>())
+            foreach (var cat in view.Timeline?.Categories ?? new List<Category>())
             {
                 SvgRect rect = new()
                 {
@@ -48,37 +48,51 @@ namespace Pictura.Vita.Presentation.Service
                 var episodes = (view.Timeline?.Episodes ?? new List<Episode>())
                     .Where(x => cat.EpisodeIds.ToNullSafe().Contains(x.EpisodeId));
 
-                foreach(var episode in episodes)
+                foreach (var episode in episodes
+                    .OrderBy(x => x.Start)
+                    .ThenBy(x => x.End)
+                    .ThenBy(x => x.Title))
                 {
                     runningY += 500;
 
-                    SvgRect epRect = new()
-                    {
-                        X = episode.Start.DayDiff(view.Start),
-                        Y = runningY,
-                        Width = episode.End.DayDiff(episode.Start),
-                        Height = 500,
-                        FillColor = System.Drawing.Color.Red
-                    };
-
-                    svg.AddChild(epRect);
-
-                    SvgText episodText = new()
-                    {
-                        X = episode.Start.DayDiff(view.Start),
-                        Y = runningY,
-                        Width = episode.End.DayDiff(episode.Start),
-                        Height = 500,
-                        Content = episode.Title
-                    };
-
-                    svg.AddChild(episodText);
+                    foreach (var element in BuildEpisodeElements(view, episode, runningY))
+                        svg.AddChild(element);
                 }
 
                 runningY += 500;
             }
 
             return svg;
+        }
+
+        public List<Element> BuildEpisodeElements(
+            TimelineView view,
+            Episode episode,
+            int runningY
+            )
+        {
+            var effectiveStart = Functions.LaterOf(episode.Start, view.Start);
+            var effectiveEnd = Functions.EarlierOf(episode.End ?? view.End, view.End);
+
+            SvgRect rect = new()
+            {
+                X = effectiveStart.DayDiff(view.Start),
+                Y = runningY,
+                Width = episode.End.DayDiff(effectiveStart),
+                Height = 500,
+                FillColor = System.Drawing.Color.Red
+            };
+
+            SvgText text = new()
+            {
+                X = effectiveStart.DayDiff(view.Start),
+                Y = runningY,
+                Width = effectiveEnd.DayDiff(effectiveStart),
+                Height = 500,
+                Content = episode.Title.AppendIfNotWhitespace(episode.Subtitle, " - ")
+            };
+
+            return new List<Element> { rect, text };
         }
     }
 }
