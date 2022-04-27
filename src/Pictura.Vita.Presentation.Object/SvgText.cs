@@ -29,7 +29,7 @@ namespace Pictura.Vita.Presentation.Object
                         .AddPart(YCenter)
                     )
                 )
-                .AddAttribute("stroke", Color.Transparent.ToRgb())
+                .AddAttribute("stroke", Color.Empty.ToRgb())
                 .MakeSelfClosed();
 
             var text = new TagBuilder("text");

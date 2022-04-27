@@ -8,7 +8,16 @@ namespace Pictura.Vita.Presentation.Object
     {
         public override string RenderOpen() => 
             new TagBuilder("svg")
-                .AddAttribute("viewbox", $"{X} {Y} {Width} 10000")
+                .AddAttribute(
+                    new AttributeBuilder("viewbox", 
+                        new ValueBuilder()
+                            .UseDelimiter(' ')
+                            .AddPart(X)
+                            .AddPart(Y)
+                            .AddPart(Width)
+                            .AddPart(10000)
+                    )
+                )
                 .AddAttribute("xmlns", "http://www.w3.org/2000/svg")
                 .AddAttribute(
                     new AttributeBuilder("style", 
