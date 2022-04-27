@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Pictura.Vita.Utility;
+using System.Drawing;
+using System.Text;
 
 namespace Pictura.Vita.Presentation.Object
 {
@@ -16,7 +18,7 @@ namespace Pictura.Vita.Presentation.Object
             var path = new TagBuilder("path")
                 .AddAttribute("id", pathId)
                 .AddAttribute("d", $"M {X} {YCenter} L {X + Width} {YCenter}")
-                .AddAttribute("stroke", "transparent")
+                .AddAttribute("stroke", Color.Transparent.ToRgb())
                 .MakeSelfClosed();
 
             var text = new TagBuilder("text");
@@ -26,7 +28,7 @@ namespace Pictura.Vita.Presentation.Object
                 .AddAttribute("startoffset", X + Width / 2 - X)
                 .AddAttribute("text-anchor", "middle")
                 .AddAttribute("dominant-baseline", "middle")
-                .AddAttribute("fill", "green")
+                .AddAttribute("fill", Color.White.ToRgb())
                 .AddAttribute("font-size", 100);
 
             s.Append(path.RenderOpen());

@@ -9,36 +9,38 @@ namespace Pictura.Vita.Presentation.Object
         public static ValueBuilder AddValuePart(this ValueBuilder input, int value) =>
             AddValuePart(input, string.Empty, value);
 
-        public static ValueBuilder AddValuePart(this ValueBuilder input, string key, string value)
+        public static ValueBuilder AddValuePart(this ValueBuilder input, string key, int value) =>
+            AddValuePart(input, key, value.ToString());
+
+        public static ValueBuilder AddValuePart(this ValueBuilder input, ValuePartBuilder valuePartBuilder)
         {
-            input.ValueParts.Add(new ValuePart()
-            {
-                Key = key,
-                Value = value
-            });
+            input.ValueParts.Add(valuePartBuilder);
             return input;
         }
 
-        public static ValueBuilder AddValuePart(this ValueBuilder input, string key, int value) =>
-            AddValuePart(input, key, value.ToString());
+        public static ValueBuilder AddValuePart(this ValueBuilder input, string key, string value)
+        {
+            input.ValueParts.Add(new ValuePartBuilder(key, value));
+            return input;
+        }
     }
 
     public class ValueBuilder
     {
         public ValueBuilder()
         {
-            ValueParts = new List<ValuePart>();
+            ValueParts = new List<ValuePartBuilder>();
         }
 
-        public ValueBuilder(ValuePart valuePart)
+        public ValueBuilder(ValuePartBuilder valuePart)
         {
-            ValueParts = new List<ValuePart>
+            ValueParts = new List<ValuePartBuilder>
             {
                 valuePart
             };
         }
 
-        public List<ValuePart> ValueParts { get; set; }
+        public List<ValuePartBuilder> ValueParts { get; set; }
 
         public string Render() =>
             string.Join(';', ValueParts.Select(x => x.Render()));

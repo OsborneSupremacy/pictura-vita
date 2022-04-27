@@ -12,7 +12,14 @@ namespace Pictura.Vita.Presentation.Object
                 .AddAttribute("xmlns", "http://www.w3.org/2000/svg")
                 .AddAttribute(
                     new AttributeBuilder("style", 
-                        new ValueBuilder().AddValuePart("border", $"1px solid {Color.LightGreen.ToRgb()}")
+                    new ValueBuilder()
+                        .AddValuePart
+                        (
+                            new ValuePartBuilder("border")
+                                .AddSubpart("1px")
+                                .AddSubpart("solid")
+                                .AddSubpart(Color.LightGreen.ToRgb())
+                        )
                     )
                 )
                 .RenderOpen();
