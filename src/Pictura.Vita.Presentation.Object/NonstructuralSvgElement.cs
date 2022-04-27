@@ -16,7 +16,12 @@ namespace Pictura.Vita.Presentation.Object
         {
             StringBuilder s = new();
             if (!string.IsNullOrWhiteSpace(Tag))
-                s.Append($@"<{Tag} x=""{X}"" y=""{Y}"" >");
+                s.Append(
+                    new TagBuilder(Tag)
+                        .AddAttribute("x", X)
+                        .AddAttribute("y", Y)
+                        .RenderOpen()
+                );
             if (!string.IsNullOrWhiteSpace(Content))
                 s.Append(Content);
             return s.ToString();
