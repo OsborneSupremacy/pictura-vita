@@ -23,27 +23,8 @@ namespace Pictura.Vita.Presentation.Service
 
             foreach (var cat in view.Timeline?.Categories ?? new List<Category>())
             {
-                SvgRect rect = new()
-                {
-                    X = 0,
-                    Y = runningY,
-                    Width = totalDays,
-                    Height = 500,
-                    FillColor = System.Drawing.Color.Blue
-                };
-
-                svg.AddChild(rect);
-
-                SvgText text = new()
-                {
-                    X = 0,
-                    Y = runningY,
-                    Width = totalDays,
-                    Height = 500,
-                    Content = cat.Title
-                };
-
-                svg.AddChild(text);
+                foreach (var element in BuildCategoryElements(cat, runningY, totalDays))
+                    svg.AddChild(element);
 
                 var episodes = (view.Timeline?.Episodes ?? new List<Episode>())
                     .Where(x => cat.EpisodeIds.ToNullSafe().Contains(x.EpisodeId));
@@ -63,6 +44,33 @@ namespace Pictura.Vita.Presentation.Service
             }
 
             return svg;
+        }
+
+        public List<Element> BuildCategoryElements(
+            Category category,
+            int runningY,
+            int totalDays
+            )
+        {
+            SvgRect rect = new()
+            {
+                X = 0,
+                Y = runningY,
+                Width = totalDays,
+                Height = 500,
+                FillColor = System.Drawing.Color.Blue
+            };
+
+            SvgText text = new()
+            {
+                X = 0,
+                Y = runningY,
+                Width = totalDays,
+                Height = 500,
+                Content = category.Title.AppendIfNotWhitespace(category.Subtitle, " - ")
+            };
+
+            return new(){ rect, text };
         }
 
         public List<Element> BuildEpisodeElements(
@@ -92,7 +100,7 @@ namespace Pictura.Vita.Presentation.Service
                 Content = episode.Title.AppendIfNotWhitespace(episode.Subtitle, " - ")
             };
 
-            return new List<Element> { rect, text };
+            return new(){ rect, text };
         }
     }
 }
