@@ -29,7 +29,7 @@ namespace Pictura.Vita.Presentation.Object
                         .AddPart(YCenter)
                     )
                 )
-                // can be useful for debugging
+                // for debugging
                 /*
                 .AddAttribute(
                     new AttributeBuilder("style", 
@@ -39,7 +39,6 @@ namespace Pictura.Vita.Presentation.Object
                     )
                 )
                 */
-                .AddAttribute("stroke", Color.White.ToRgb())
                 .MakeSelfClosed();
 
             var text = new TagBuilder("text");
