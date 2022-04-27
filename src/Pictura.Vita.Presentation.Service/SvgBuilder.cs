@@ -8,7 +8,7 @@ namespace Pictura.Vita.Presentation.Service
     {
         public Svg Build(TimelineView view)
         {
-            var totalDays = view.End.DayNumber - view.Start.DayNumber;
+            var totalDays = view.End.DayDiff(view.Start);
 
             Svg svg = new()
             {
