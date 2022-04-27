@@ -28,7 +28,8 @@ namespace Pictura.Vita.Presentation.Service
                     X = 0,
                     Y = runningY,
                     Width = totalDays,
-                    Height = 500
+                    Height = 500,
+                    FillColor = System.Drawing.Color.Blue
                 };
 
                 svg.AddChild(rect);
@@ -50,6 +51,17 @@ namespace Pictura.Vita.Presentation.Service
                 foreach(var episode in episodes)
                 {
                     runningY += 500;
+
+                    SvgRect epRect = new()
+                    {
+                        X = episode.Start.DayDiff(view.Start),
+                        Y = runningY,
+                        Width = episode.End.DayDiff(episode.Start),
+                        Height = 500,
+                        FillColor = System.Drawing.Color.Red
+                    };
+
+                    svg.AddChild(epRect);
 
                     SvgText episodText = new()
                     {

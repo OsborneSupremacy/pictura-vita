@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pictura.Vita.Utility\Pictura.Vita.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
