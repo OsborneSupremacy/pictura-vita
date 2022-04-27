@@ -17,9 +17,9 @@ namespace Pictura.Vita.Presentation.Object
                 .AddAttribute(
                     new AttributeBuilder("style", 
                         new ValueBuilder()
-                            .AddValuePart("fill", (FillColor ?? Color.Transparent).ToRgb())
-                            .AddValuePart("stroke-width", 3)
-                            .AddValuePart("stroke", Color.Black.ToRgb())
+                            .AddPart("fill", (FillColor ?? Color.Transparent).ToRgb())
+                            .AddPart("stroke-width", 3)
+                            .AddPart("stroke", Color.Black.ToRgb())
                         )
                 )
                 .MakeSelfClosed()

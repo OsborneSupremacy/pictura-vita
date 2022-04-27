@@ -5,7 +5,7 @@ namespace Pictura.Vita.Presentation.Object
     {
         public static AttributeBuilder AddValue(this AttributeBuilder input, string value)
         {
-            input.ValueBuilder.AddValuePart(value);
+            input.ValueBuilder.AddPart(value);
             return input;
         }
 

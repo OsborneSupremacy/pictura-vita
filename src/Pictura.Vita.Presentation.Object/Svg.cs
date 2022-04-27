@@ -13,7 +13,7 @@ namespace Pictura.Vita.Presentation.Object
                 .AddAttribute(
                     new AttributeBuilder("style", 
                     new ValueBuilder()
-                        .AddValuePart
+                        .AddPart
                         (
                             new ValuePartBuilder("border")
                                 .AddSubpart("1px")

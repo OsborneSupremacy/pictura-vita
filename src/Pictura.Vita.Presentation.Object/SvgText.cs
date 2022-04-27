@@ -17,7 +17,18 @@ namespace Pictura.Vita.Presentation.Object
 
             var path = new TagBuilder("path")
                 .AddAttribute("id", pathId)
-                .AddAttribute("d", $"M {X} {YCenter} L {X + Width} {YCenter}")
+                .AddAttribute(
+                    new AttributeBuilder("d",
+                    new ValueBuilder()
+                        .UseDelimiter(' ')
+                        .AddPart("M")
+                        .AddPart(X)
+                        .AddPart(YCenter)
+                        .AddPart("L")
+                        .AddPart(X + Width)
+                        .AddPart(YCenter)
+                    )
+                )
                 .AddAttribute("stroke", Color.Transparent.ToRgb())
                 .MakeSelfClosed();
 
