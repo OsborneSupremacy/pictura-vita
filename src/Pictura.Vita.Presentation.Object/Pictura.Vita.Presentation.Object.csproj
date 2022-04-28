@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pictura.Vita.Object\Pictura.Vita.Object.csproj" />
     <ProjectReference Include="..\Pictura.Vita.Utility\Pictura.Vita.Utility.csproj" />
   </ItemGroup>
 

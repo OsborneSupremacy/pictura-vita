@@ -6,6 +6,8 @@ namespace Pictura.Vita.Presentation.Object
 {
     public record SvgRect : StructuralElement
     {
+        public int Tier { get; init; }
+
         public Color? FillColor { get; init; }
 
         public override string RenderOpen() => 

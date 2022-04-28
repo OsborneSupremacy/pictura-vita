@@ -17,5 +17,7 @@ namespace Pictura.Vita.Presentation.Object
         public int HalfWidth => Width / 2;
 
         public int Width { get; set; }
+
+        public int XEnd => X + Width;
     }
 }
