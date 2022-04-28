@@ -1,28 +1,27 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Pictura.Vita.Object.Validator.Extensions
+namespace Pictura.Vita.Object.Validator.Extensions;
+
+public interface IUrlValidator { }
+
+public class UrlValidator<T> : PropertyValidator<T, string?>, IUrlValidator
 {
-    public interface IUrlValidator { }
+    public override string Name => "UrlValidator";
 
-    public class UrlValidator<T> : PropertyValidator<T, string?>, IUrlValidator
+    protected override string GetDefaultMessageTemplate(string errorCode) =>
+        "'{PropertyName}' must not be a valid URL.";
+
+    public override bool IsValid(ValidationContext<T> context, string? value)
     {
-        public override string Name => "UrlValidator";
+        if (value == null)
+            return true;
 
-        protected override string GetDefaultMessageTemplate(string errorCode) =>
-            "'{PropertyName}' must not be a valid URL.";
-
-        public override bool IsValid(ValidationContext<T> context, string? value)
+        var options = new UriCreationOptions
         {
-            if (value == null)
-                return true;
+            DangerousDisablePathAndQueryCanonicalization = true
+        };
 
-            var options = new UriCreationOptions
-            {
-                DangerousDisablePathAndQueryCanonicalization = true
-            };
-
-            return Uri.TryCreate(value, options, out _);
-        }
+        return Uri.TryCreate(value, options, out _);
     }
 }

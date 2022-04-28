@@ -3,127 +3,126 @@ using Pictura.Vita.Presentation.Object;
 using Pictura.Vita.Utility;
 using System.Drawing;
 
-namespace Pictura.Vita.Presentation.Service
+namespace Pictura.Vita.Presentation.Service;
+
+public class SvgBuilder
 {
-    public class SvgBuilder
+    private readonly int _categoryHeight = 300;
+    private readonly int _episodeHeight = 200;
+
+    public Svg Build(TimelineView view)
     {
-        private readonly int _categoryHeight = 300;
-        private readonly int _episodeHeight = 200;
+        var totalDays = view.End.DayDiff(view.Start);
 
-        public Svg Build(TimelineView view)
+        Svg svg = new()
         {
-            var totalDays = view.End.DayDiff(view.Start);
+            X = 0,
+            Y = 0,
+            IsRoot = true,
+            Width = totalDays
+        };
 
-            Svg svg = new()
+        var runningY = 0;
+
+        foreach (var cat in view.Timeline?.Categories ?? new List<Category>())
+        {
+            foreach (var element in BuildCategoryElements(cat, Color.Blue, totalDays, _categoryHeight, runningY))
+                svg.AddChild(element);
+
+            runningY += _categoryHeight;
+
+            var episodes = (view.Timeline?.Episodes ?? new List<Episode>())
+                .Where(x => cat.EpisodeIds.ToNullSafe().Contains(x.EpisodeId));
+
+            List<SvgRect> categoryRectangles = new();
+
+            foreach (var episode in episodes
+                .OrderBy(x => x.Start)
+                .ThenBy(x => x.End)
+                .ThenBy(x => x.Title))
             {
-                X = 0,
-                Y = 0,
-                IsRoot = true,
-                Width = totalDays
-            };
+                var (workingTier, workingY) = PlacementCalculator
+                    .CalculateTier(runningY, _episodeHeight, categoryRectangles, episode.Start, view.Start);
 
-            var runningY = 0;
-
-            foreach (var cat in view.Timeline?.Categories ?? new List<Category>())
-            {
-                foreach (var element in BuildCategoryElements(cat, Color.Blue, totalDays, _categoryHeight, runningY))
-                    svg.AddChild(element);
-
-                runningY += _categoryHeight;
-
-                var episodes = (view.Timeline?.Episodes ?? new List<Episode>())
-                    .Where(x => cat.EpisodeIds.ToNullSafe().Contains(x.EpisodeId));
-
-                List<SvgRect> categoryRectangles = new();
-
-                foreach (var episode in episodes
-                    .OrderBy(x => x.Start)
-                    .ThenBy(x => x.End)
-                    .ThenBy(x => x.Title))
+                foreach (var element in BuildEpisodeElements(view, episode, Color.RebeccaPurple, workingTier, _episodeHeight, workingY))
                 {
-                    var (workingTier, workingY) = PlacementCalculator
-                        .CalculateTier(runningY, _episodeHeight, categoryRectangles, episode.Start, view.Start);
-
-                    foreach (var element in BuildEpisodeElements(view, episode, Color.RebeccaPurple, workingTier, _episodeHeight, workingY))
-                    {
-                        // adding to this list, because needed for CalculateTier
-                        if (element is SvgRect svgRectElement)
-                            categoryRectangles.Add(svgRectElement);
-                        svg.AddChild(element);
-                    }
-
-                    // only increase runningY if workingY is greater
-                    if (workingY > runningY)
-                        runningY = workingY;
+                    // adding to this list, because needed for CalculateTier
+                    if (element is SvgRect svgRectElement)
+                        categoryRectangles.Add(svgRectElement);
+                    svg.AddChild(element);
                 }
 
+                // only increase runningY if workingY is greater
+                if (workingY > runningY)
+                    runningY = workingY;
             }
 
-            svg.Height = runningY;
-            return svg;
         }
 
-        public List<Element> BuildCategoryElements(
-            Category category,
-            Color fillColor,
-            int width,
-            int height,
-            int runningY
-            ) => new()
-            {
-                new SvgRect
-                {
-                    X = 0,
-                    Y = runningY,
-                    Width = width,
-                    Height = height,
-                    FillColor = fillColor
-                },
+        svg.Height = runningY;
+        return svg;
+    }
 
-                new SvgText
-                {
-                    X = 0,
-                    Y = runningY,
-                    Width = width,
-                    Height = height,
-                    Content = category.Title.AppendIfNotWhitespace(category.Subtitle, " - ")
-                }
-            };
-
-        public List<Element> BuildEpisodeElements(
-            TimelineView view,
-            Episode episode,
-            Color fillColor,
-            int tier,
-            int height,
-            int runningY
-            )
+    public List<Element> BuildCategoryElements(
+        Category category,
+        Color fillColor,
+        int width,
+        int height,
+        int runningY
+        ) => new()
         {
-            var effectiveStart = Functions.LaterOf(episode.Start, view.Start);
-            var effectiveEnd = Functions.EarlierOf(episode.End ?? view.End, view.End);
-
-            return new()
+            new SvgRect
             {
-                new SvgRect
-                {
-                    X = effectiveStart.DayDiff(view.Start),
-                    Y = runningY,
-                    Tier = tier,
-                    Width = episode.End.DayDiff(effectiveStart),
-                    Height = height,
-                    FillColor = fillColor
-                },
+                X = 0,
+                Y = runningY,
+                Width = width,
+                Height = height,
+                FillColor = fillColor
+            },
 
-                new SvgText()
-                {
-                    X = effectiveStart.DayDiff(view.Start),
-                    Y = runningY,
-                    Width = effectiveEnd.DayDiff(effectiveStart),
-                    Height = height,
-                    Content = episode.Title.AppendIfNotWhitespace(episode.Subtitle, " - ")
-                }
+            new SvgText
+            {
+                X = 0,
+                Y = runningY,
+                Width = width,
+                Height = height,
+                Content = category.Title.AppendIfNotWhitespace(category.Subtitle, " - ")
+            }
+        };
 
-            };
-        }
+    public List<Element> BuildEpisodeElements(
+        TimelineView view,
+        Episode episode,
+        Color fillColor,
+        int tier,
+        int height,
+        int runningY
+        )
+    {
+        var effectiveStart = Functions.LaterOf(episode.Start, view.Start);
+        var effectiveEnd = Functions.EarlierOf(episode.End ?? view.End, view.End);
+
+        return new()
+        {
+            new SvgRect
+            {
+                X = effectiveStart.DayDiff(view.Start),
+                Y = runningY,
+                Tier = tier,
+                Width = episode.End.DayDiff(effectiveStart),
+                Height = height,
+                FillColor = fillColor
+            },
+
+            new SvgText()
+            {
+                X = effectiveStart.DayDiff(view.Start),
+                Y = runningY,
+                Width = effectiveEnd.DayDiff(effectiveStart),
+                Height = height,
+                Content = episode.Title.AppendIfNotWhitespace(episode.Subtitle, " - ")
+            }
+
+        };
     }
 }

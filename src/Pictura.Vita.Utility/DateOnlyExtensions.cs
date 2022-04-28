@@ -1,15 +1,14 @@
 ﻿
-namespace Pictura.Vita.Utility
-{
-    public static class DateOnlyExtensions
-    {
-        public static int DayDiff(this DateOnly input, DateOnly comparisonDate) =>
-            Math.Abs(input.DayNumber - comparisonDate.DayNumber);
+namespace Pictura.Vita.Utility;
 
-        public static int DayDiff(this DateOnly? input, DateOnly comparisonDate)
-        {
-            if (!input.HasValue) return 1;
-            return input.Value.DayDiff(comparisonDate);
-        }
+public static class DateOnlyExtensions
+{
+    public static int DayDiff(this DateOnly input, DateOnly comparisonDate) =>
+        Math.Abs(input.DayNumber - comparisonDate.DayNumber);
+
+    public static int DayDiff(this DateOnly? input, DateOnly comparisonDate)
+    {
+        if (!input.HasValue) return 1;
+        return input.Value.DayDiff(comparisonDate);
     }
 }
