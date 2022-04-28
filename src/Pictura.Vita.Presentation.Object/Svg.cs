@@ -15,7 +15,7 @@ namespace Pictura.Vita.Presentation.Object
                             .AddPart(X)
                             .AddPart(Y)
                             .AddPart(Width)
-                            .AddPart(10000)
+                            .AddPart(Height)
                     )
                 )
                 .AddAttribute("xmlns", "http://www.w3.org/2000/svg")
