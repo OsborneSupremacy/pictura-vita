@@ -1,4 +1,5 @@
-﻿using Pictura.Vita.Object;
+﻿using Pictura.Vita.Interface;
+using Pictura.Vita.Object;
 using Pictura.Vita.Presentation.Object;
 using Pictura.Vita.Utility;
 using System.Drawing;
@@ -24,9 +25,14 @@ public class SvgBuilder
 
         var runningY = 0;
 
+        foreach (var element in BuildFullSpanElements(view.Timeline!, Color.Black, totalDays, 500, runningY))
+            svg.AddChild(element);
+
+        runningY += 500;
+
         foreach (var cat in view.Timeline?.Categories ?? new List<Category>())
         {
-            foreach (var element in BuildCategoryElements(cat, Color.Blue, totalDays, _categoryHeight, runningY))
+            foreach (var element in BuildFullSpanElements(cat, Color.Blue, totalDays, _categoryHeight, runningY))
                 svg.AddChild(element);
 
             runningY += _categoryHeight;
@@ -69,8 +75,8 @@ public class SvgBuilder
         return svg;
     }
 
-    public List<Element> BuildCategoryElements(
-        Category category,
+    public List<Element> BuildFullSpanElements(
+        ITitled titled,
         Color fillColor,
         int width,
         int height,
@@ -92,7 +98,7 @@ public class SvgBuilder
                 Y = runningY,
                 Width = width,
                 Height = height,
-                Content = category.Title.AppendIfNotWhitespace(category.Subtitle, " - ")
+                Content = titled.Title.AppendIfNotWhitespace(titled.Subtitle, " - ")
             }
         };
 

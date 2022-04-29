@@ -1,6 +1,8 @@
-﻿namespace Pictura.Vita.Object;
+﻿using Pictura.Vita.Interface;
 
-public record Category
+namespace Pictura.Vita.Object;
+
+public record Category : ITitled
 {
     public Guid CategoryId { get; set; }
 

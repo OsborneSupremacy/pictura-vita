@@ -1,6 +1,8 @@
-﻿namespace Pictura.Vita.Object;
+﻿using Pictura.Vita.Interface;
 
-public record Episode
+namespace Pictura.Vita.Object;
+
+public record Episode : ITitled
 {
     public Guid EpisodeId { get; set; }
 
