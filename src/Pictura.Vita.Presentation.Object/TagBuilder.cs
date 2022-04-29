@@ -10,11 +10,11 @@ public static class TagBuilderExtensions
         return input;
     }
 
-    public static TagBuilder AddAttribute(this TagBuilder input, string id, string value) =>
-        AddAttribute(input, new AttributeBuilder(id).AddValue(value));
+    public static TagBuilder AddAttribute(this TagBuilder input, string key, string value) =>
+        AddAttribute(input, new AttributeBuilder(key).AddValue(value));
 
-    public static TagBuilder AddAttribute(this TagBuilder input, string id, int value) =>
-        AddAttribute(input, id, value.ToString());
+    public static TagBuilder AddAttribute(this TagBuilder input, string key, int value) =>
+        AddAttribute(input, key, value.ToString());
   
     public static TagBuilder AddAttribute(this TagBuilder input, AttributeBuilder attributeBuilder)
     {

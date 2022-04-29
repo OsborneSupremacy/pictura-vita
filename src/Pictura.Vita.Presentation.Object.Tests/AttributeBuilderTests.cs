@@ -16,6 +16,6 @@ public class AttributeBuilderTests
         var result = sut.Render();
 
         // asset
-        result.Should().Be("height='100'");
+        result.Should().Be(@"height=""100""");
     }
 }
