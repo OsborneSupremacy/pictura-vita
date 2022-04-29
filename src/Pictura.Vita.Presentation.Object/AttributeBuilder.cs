@@ -32,5 +32,5 @@ public class AttributeBuilder
     public ValueBuilder ValueBuilder { get; set; }
 
     public string Render() =>
-        $@"{Key}=""{ValueBuilder.Render()}""";
+        $@"{Key}='{ValueBuilder.Render()}'";
 }
