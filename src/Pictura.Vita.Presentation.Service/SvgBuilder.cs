@@ -36,11 +36,15 @@ public class SvgBuilder
 
             List<SvgRect> categoryRectangles = new();
 
+            bool episodesAdded = false;
+
             foreach (var episode in episodes
                 .OrderBy(x => x.Start)
                 .ThenBy(x => x.End)
                 .ThenBy(x => x.Title))
             {
+                episodesAdded = true;
+
                 var (workingTier, workingY) = PlacementCalculator
                     .CalculateTier(runningY, _episodeHeight, categoryRectangles, episode.Start, view.Start);
 
@@ -57,6 +61,8 @@ public class SvgBuilder
                     runningY = workingY;
             }
 
+            if (episodesAdded)
+                runningY += _episodeHeight;
         }
 
         svg.Height = runningY;

@@ -14,13 +14,10 @@ public class SvgWriterTests
     public void Write_Expected_Behavior()
     {
         // arrange
-        Dictionary<int, Guid> episodeDict = new() {
-            { 1, Guid.NewGuid() },
-            { 2, Guid.NewGuid() },
-            { 3, Guid.NewGuid() },
-            { 4, Guid.NewGuid() },
-            { 5, Guid.NewGuid() },
-        };
+        Dictionary<int, Guid> episodeDict = new();
+
+        for (int i = 1; i <= 100; i++)
+            episodeDict.Add(i, Guid.NewGuid());
 
         TimelineView view = new()
         {
@@ -80,7 +77,25 @@ public class SvgWriterTests
                         Subtitle = "Follows Me Wherever I Go",
                         EpisodeType = EpisodeType.Period,
                         EpisodeId = episodeDict[5]
-                    }
+                    },
+
+                    new Episode
+                    {
+                        Start = new DateOnly(1974, 12, 11),
+                        End = new DateOnly(1988, 05, 7),
+                        Title = "Lamborghini Countach",
+                        EpisodeType = EpisodeType.Period,
+                        EpisodeId = episodeDict[20]
+                    },
+
+                    new Episode
+                    {
+                        Start = new DateOnly(1992, 12, 11),
+                        End = new DateOnly(1998, 05, 7),
+                        Title = "McLaren F1",
+                        EpisodeType = EpisodeType.Period,
+                        EpisodeId = episodeDict[21]
+                    },
 
                 },
 
@@ -98,7 +113,15 @@ public class SvgWriterTests
                             episodeDict[5],
                         }
                     },
-                    new Category { Title = "Category 2" },
+                    new Category { 
+                        Title = "Vehicles",
+                        EpisodeIds = new List<Guid>
+                        {
+                            episodeDict[20],
+                            episodeDict[21],
+                        }
+
+                    },
                     new Category { Title = "Category 3" },
                     new Category { Title = "Category 4" },
                     new Category { Title = "Category 5" }
