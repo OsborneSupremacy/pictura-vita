@@ -38,4 +38,5 @@ public static class PlacementCalculator
         // if we got this far, no existing tier has room for this episode
         return (maxTier + 1, yIn + heightIncrement);
     }
+
 }
