@@ -62,8 +62,21 @@ public class SvgBuilder
             .ThenBy(x => x.Title))
             runningY = PlaceEpisode(view, svg, categoryRectangles, episode, runningY);
 
-        if (episodes.Any())
-            runningY += _episodeHeight;
+        // draw placeholder rectangle if no episodes in category
+        if(!episodes.Any())
+            svg.AddChild(
+                new SvgRect
+                {
+                    X = 0,
+                    Y = runningY,
+                    Tier = 1,
+                    Width = view.End.DayDiff(view.Start),
+                    Height = _episodeHeight,
+                    FillColor = Color.Transparent
+                }
+            );
+
+        runningY += _episodeHeight;
 
         return runningY;
     }
