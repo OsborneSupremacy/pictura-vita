@@ -26,12 +26,12 @@ public class SvgBuilder
 
         var runningY = 0;
 
-        foreach (var element in BuildFullSpanElements(view.Timeline!, Color.Black, totalDays, _titleHeight, runningY))
+        foreach (var element in BuildFullSpanElements(view.Timeline.ToNullSafe(), Color.Black, totalDays, _titleHeight, runningY))
             svg.AddChild(element);
 
         runningY += _titleHeight;
 
-        foreach (var cat in view.Timeline?.Categories ?? new List<Category>())
+        foreach (var cat in view.Timeline.ToNullSafe().Categories.ToNullSafe())
             runningY = BuildCategory(view, svg, cat, totalDays, runningY);
 
         svg.Height = runningY;
@@ -51,7 +51,7 @@ public class SvgBuilder
 
         runningY += _categoryHeight;
 
-        var episodes = (view.Timeline?.Episodes ?? new List<Episode>())
+        var episodes = (view.Timeline.ToNullSafe().Episodes.ToNullSafe())
             .Where(x => category.EpisodeIds.ToNullSafe().Contains(x.EpisodeId));
 
         List<SvgRect> categoryRectangles = new();
@@ -76,9 +76,7 @@ public class SvgBuilder
                 }
             );
 
-        runningY += _episodeHeight;
-
-        return runningY;
+        return runningY + _episodeHeight;
     }
 
     public int PlaceEpisode(
