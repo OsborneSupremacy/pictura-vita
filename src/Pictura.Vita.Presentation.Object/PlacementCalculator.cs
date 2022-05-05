@@ -19,7 +19,7 @@ public static class PlacementCalculator
         var maxTier = svgRects.Max(x => x.Tier);
 
         // get starting X value of this episode
-        var startX = Functions.LaterOf(episodeStart, viewStart).DayDiff(viewStart);
+        var startX = episodeStart.DayDiffFromLater(viewStart);
 
         // loop through tiers, starting with lowest
         for (int t = 1; t <= maxTier; t++)
@@ -31,7 +31,7 @@ public static class PlacementCalculator
 
             // if rightmost order ends before startX, we can place this episode
             // on this tier
-            if (tierEnd <= startX)
+            if (tierEnd < startX)
                 return (t, tierRects.First().Y);
         }
 

@@ -135,7 +135,7 @@ public class SvgBuilder
         {
             new SvgRect
             {
-                X = effectiveStart.DayDiff(view.Start),
+                X =  effectiveStart.DayDiff(view.Start),
                 Y = runningY,
                 Tier = tier,
                 Width = episode.End.DayDiff(effectiveStart),
