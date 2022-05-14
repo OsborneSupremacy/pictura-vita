@@ -8,7 +8,11 @@ public record class Person
 
     public bool ObfuscateDates { get; set; }
 
+    public DatePrecision BirthPrecision { get; set; }
+
     public DateOnly? Birth { get; set; }
+
+    public DatePrecision DeathPrecision { get; set; }
 
     public DateOnly? Death { get; set; }
 }

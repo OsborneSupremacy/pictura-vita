@@ -17,12 +17,14 @@ public record Episode : ITitled
     public string? Url { get; set; }
 
     public string? UrlDescription { get; set; }
-
-    public bool ObfuscateDates { get; set; }
-
+    
     public EpisodeType EpisodeType { get; set; }
 
+    public DatePrecision StartPrecision { get; set; }
+
     public DateOnly Start { get; set; }
+
+    public DatePrecision EndPrecision { get; set; }
 
     public DateOnly? End { get; set; }
 }
