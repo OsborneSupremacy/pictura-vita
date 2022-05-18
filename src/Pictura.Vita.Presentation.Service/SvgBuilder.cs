@@ -156,30 +156,28 @@ public class SvgBuilder
         int runningYIn
         )
     {
-        var runningYOut = runningYIn;
-
         var effectiveStart = Functions.LaterOf(episode.Start, view.Start);
         var effectiveEnd = Functions.EarlierOf(episode.End ?? view.End, view.End);
 
         var hasSubtitle = !episode.Subtitle.IsNullOrWhiteSpace();
-        //var subTitleHeight = (height * .8);
+        var subTitleHeight = hasSubtitle ? Convert.ToInt32(height * .8) : 0;
 
         List<Element> results = new();
 
         results.Add(new SvgRect
         {
             X = effectiveStart.DayDiff(view.Start),
-            Y = runningYOut,
+            Y = runningYIn,
             Tier = tier,
             Width = episode.End.DayDiff(effectiveStart),
-            Height = !hasSubtitle ? height : height * 2,
+            Height = height + subTitleHeight,
             FillColor = fillColor
         });
 
         results.Add(new SvgText()
         {
             X = effectiveStart.DayDiff(view.Start),
-            Y = runningYOut,
+            Y = runningYIn,
             Width = effectiveEnd.DayDiff(effectiveStart),
             Height = height,
             Content = episode.Title,
@@ -188,20 +186,19 @@ public class SvgBuilder
 
         if (hasSubtitle)
         {
-            runningYOut += height;
             results.Add(new SvgText
             {
                 X = effectiveStart.DayDiff(view.Start),
-                Y = runningYOut,
+                Y = runningYIn + subTitleHeight,
                 Width = effectiveEnd.DayDiff(effectiveStart),
-                Height = height,
+                Height = subTitleHeight,
                 Content = episode.Subtitle,
                 FontSize = 80,
-                DominantBaseLine = "top"
+                DominantBaseLine = "middle"
             });
         }
 
-        return (results, runningYOut);
+        return (results, runningYIn + subTitleHeight);
     }
 
     protected void AddEpisodeElements(
