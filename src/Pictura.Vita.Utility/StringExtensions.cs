@@ -21,4 +21,8 @@ public static class StringExtensions
         if(string.IsNullOrWhiteSpace(value)) return input ?? string.Empty;
         return $"{input}{separator}{value}";
     }
+
+    public static bool IsNullOrWhiteSpace(this string? input) =>
+        string.IsNullOrWhiteSpace(input);
+
 }

@@ -90,10 +90,13 @@ public class SvgBuilder
         var (workingTier, workingY) = PlacementCalculator
             .CalculateTier(runningY, _episodeHeight, categoryRectangles, episode.Start, view.Start);
 
+        var (elements, yOut) = BuildEpisodeElements(view, episode, Color.RebeccaPurple, workingTier, _episodeHeight, workingY);
+        workingY = yOut;
+
         AddEpisodeElements(
             svg,
             categoryRectangles,
-            BuildEpisodeElements(view, episode, Color.RebeccaPurple, workingTier, _episodeHeight, workingY)
+            elements
         );
 
         // only increase runningY if workingY is greater
@@ -109,61 +112,96 @@ public class SvgBuilder
         int width,
         int height,
         int runningY
-        ) => new()
+        )
+    {
+        List<Element> results = new();
+
+        results.Add(new SvgRect
         {
-            new SvgRect
+            X = 0,
+            Y = runningY,
+            Width = width,
+            Height = height,
+            FillColor = fillColor
+        });
+
+        results.Add(new SvgText
+        {
+            X = 0,
+            Y = runningY,
+            Width = width,
+            Height = height,
+            Content = titled.Title
+        });
+
+        if (!titled.Subtitle.IsNullOrWhiteSpace())
+            results.Add(new SvgText
             {
                 X = 0,
                 Y = runningY,
                 Width = width,
                 Height = height,
-                FillColor = fillColor
-            },
+                Content = titled.Subtitle
+            });
 
-            new SvgText
-            {
-                X = 0,
-                Y = runningY,
-                Width = width,
-                Height = height,
-                Content = titled.Title.AppendIfNotWhitespace(titled.Subtitle, " - ")
-            }
-        };
+        return results;
+    }
 
-    public List<Element> BuildEpisodeElements(
+    public (List<Element> elements, int runningYOut) BuildEpisodeElements(
         TimelineView view,
         Episode episode,
         Color fillColor,
         int tier,
         int height,
-        int runningY
+        int runningYIn
         )
     {
+        var runningYOut = runningYIn;
+
         var effectiveStart = Functions.LaterOf(episode.Start, view.Start);
         var effectiveEnd = Functions.EarlierOf(episode.End ?? view.End, view.End);
 
-        return new()
-        {
-            new SvgRect
-            {
-                X =  effectiveStart.DayDiff(view.Start),
-                Y = runningY,
-                Tier = tier,
-                Width = episode.End.DayDiff(effectiveStart),
-                Height = height,
-                FillColor = fillColor
-            },
+        var hasSubtitle = !episode.Subtitle.IsNullOrWhiteSpace();
+        //var subTitleHeight = (height * .8);
 
-            new SvgText()
+        List<Element> results = new();
+
+        results.Add(new SvgRect
+        {
+            X = effectiveStart.DayDiff(view.Start),
+            Y = runningYOut,
+            Tier = tier,
+            Width = episode.End.DayDiff(effectiveStart),
+            Height = !hasSubtitle ? height : height * 2,
+            FillColor = fillColor
+        });
+
+        results.Add(new SvgText()
+        {
+            X = effectiveStart.DayDiff(view.Start),
+            Y = runningYOut,
+            Width = effectiveEnd.DayDiff(effectiveStart),
+            Height = height,
+            Content = episode.Title,
+            DominantBaseLine = !hasSubtitle ? "middle" : "hanging"
+        });
+
+        if (hasSubtitle)
+        {
+            runningYOut += height;
+            results.Add(new SvgText
             {
                 X = effectiveStart.DayDiff(view.Start),
-                Y = runningY,
+                Y = runningYOut,
                 Width = effectiveEnd.DayDiff(effectiveStart),
                 Height = height,
-                Content = episode.Title.AppendIfNotWhitespace(episode.Subtitle, " - ")
-            }
+                Content = episode.Subtitle,
+                FontSize = 80,
+                DominantBaseLine = "top"
+            });
+        }
 
-        };
+        return (results, runningYOut);
     }
 
     protected void AddEpisodeElements(

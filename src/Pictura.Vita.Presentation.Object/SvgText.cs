@@ -8,6 +8,10 @@ public record class SvgText : StructuralElement
 {
     public string? Content { get; init; }
 
+    public int FontSize = 100;
+
+    public string DominantBaseLine = "middle";
+
     public override string RenderOpen()
     {
         StringBuilder s = new();
@@ -47,9 +51,9 @@ public record class SvgText : StructuralElement
             .AddAttribute("href", "#" + pathId)
             .AddAttribute("startoffset", X + Width / 2 - X)
             .AddAttribute("text-anchor", "middle")
-            .AddAttribute("dominant-baseline", "middle")
+            .AddAttribute("dominant-baseline", DominantBaseLine)
             .AddAttribute("fill", Color.White.ToRgb())
-            .AddAttribute("font-size", 100);
+            .AddAttribute("font-size", FontSize);
 
         s.Append(path.RenderOpen());
         s.Append(text.RenderOpen());
@@ -57,9 +61,6 @@ public record class SvgText : StructuralElement
 
         if (!string.IsNullOrWhiteSpace(Content))
             s.Append(Content);
-
-        s.Append(textPath.RenderClose());
-        s.Append(text.RenderClose());
 
         return s.ToString();
     }

@@ -11,4 +11,6 @@ public record TimelineView
     public DateOnly Start { get; set; }
 
     public DateOnly End { get; set; }
+
+    public bool ShowEmptyCategories { get; set; }
 }
