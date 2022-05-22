@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictura.Vita.Presentation.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictura.Vita.Presentation.Service.Tests", "src\Pictura.Vita.Presentation.Service.Tests\Pictura.Vita.Presentation.Service.Tests.csproj", "{C0C668E5-24B0-4DEE-A3DC-8635DCDFB563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictura.Vita.Presentation.Object.Tests", "src\Pictura.Vita.Presentation.Object.Tests\Pictura.Vita.Presentation.Object.Tests.csproj", "{CE517730-C105-4264-8CDB-A31EAFAEFF17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictura.Vita.Presentation.Object.Tests", "src\Pictura.Vita.Presentation.Object.Tests\Pictura.Vita.Presentation.Object.Tests.csproj", "{CE517730-C105-4264-8CDB-A31EAFAEFF17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Picture.Vita.Client2", "src\Picture.Vita.Client2\Picture.Vita.Client2.csproj", "{9418EA63-DC0A-40E6-8870-567CAEB67F54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{CE517730-C105-4264-8CDB-A31EAFAEFF17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE517730-C105-4264-8CDB-A31EAFAEFF17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE517730-C105-4264-8CDB-A31EAFAEFF17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9418EA63-DC0A-40E6-8870-567CAEB67F54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9418EA63-DC0A-40E6-8870-567CAEB67F54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9418EA63-DC0A-40E6-8870-567CAEB67F54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9418EA63-DC0A-40E6-8870-567CAEB67F54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
